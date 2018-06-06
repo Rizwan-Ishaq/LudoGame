@@ -23,10 +23,23 @@ public class LudoCommunication extends Thread{
 			while(true) {
 				if (LudoServer.serverPlayers.size() < 4) {
 					String playerIP = commSocket.getRemoteSocketAddress().toString();
+					
+//					for(LudoServerPlayer player : LudoServer.serverPlayers ) {
+//						if (player.getPlayerIP().equals(playerIP)) {
+//							output.println("Player with same IP already connected");
+//							output.println("CLOSING CONNECTION...");
+//						}				
+//					}
+					
+					System.out.println("AFTER FOR LOOP");
+					
 					LudoServerPlayer player = new LudoServerPlayer(playerIP);
 					LudoServer.serverPlayers.add(player);
 					output.println("SUCCESSFULLY CONNECTED TO GAME");
 					output.println("YOU ARE PLAYER " + player.getPlayerID());
+					System.out.println(LudoServer.serverPlayers.size());
+					System.out.println(player.getPlayerIP());
+					break;
 				} else if (LudoServer.serverPlayers.size() == 4) {
 					output.println("GAME ALREADY IN PROGRESS");
 				}
