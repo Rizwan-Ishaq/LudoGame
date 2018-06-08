@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.*;
+import java.util.Random;
 
 public class TestClient {
 	
@@ -16,12 +17,30 @@ public class TestClient {
 	    
 	    while(true) {
 	    	String message = in.readLine();
-	    	System.out.println(message);
+	    	if (!(message == null)) {
+	    		System.out.println(message);
+	    	}
+	    	
+	    	// SPLIT MESSAGE
+	    	// IF SÆTNING SOM TJEKKER SPLITTET MESSAGE
+	    	// INDE I IF SÆTNING ER DER METODEKALD TIL DE FORSKELLIGE HANDLINGER
+	    	// DER SKAL SKE VED SPECIFIKKE PROTOKOLKALD
+	    	// EN METODE FOR HVER HANDLING
 	    }
 		
 	}
 	
 	public static void main(String[] args) throws IOException{
 		TestClient.conn();
+//		System.out.println(diceRoll());
+//		System.out.println(diceRoll());
+//		System.out.println(diceRoll());
+//		System.out.println(diceRoll());
+	}
+	
+	public static int diceRoll() {
+		Random diceVal = new Random();
+		return diceVal.nextInt(6)+1;
+		
 	}
 }

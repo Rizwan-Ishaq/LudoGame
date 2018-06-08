@@ -21,46 +21,54 @@ public class LudoCommunication extends Thread{
 			output = new PrintWriter(commSocket.getOutputStream(), true);
 			
 			while(true) {
+				
 				if (LudoServer.serverPlayers.size() < 4) {
-					String playerIP = commSocket.getRemoteSocketAddress().toString();
-					
-//					for(LudoServerPlayer player : LudoServer.serverPlayers ) {
-//						if (player.getPlayerIP().equals(playerIP)) {
-//							output.println("Player with same IP already connected");
-//							output.println("CLOSING CONNECTION...");
-//						}				
-//					}
-					
-					System.out.println("AFTER FOR LOOP");
-					
-					LudoServerPlayer player = new LudoServerPlayer(playerIP);
-					LudoServer.serverPlayers.add(player);
-					output.println("SUCCESSFULLY CONNECTED TO GAME");
-					output.println("YOU ARE PLAYER " + player.getPlayerID());
-					System.out.println(LudoServer.serverPlayers.size());
-					System.out.println(player.getPlayerIP());
+					playerConnection();
 					break;
-				} else if (LudoServer.serverPlayers.size() == 4) {
-					output.println("GAME ALREADY IN PROGRESS");
+				} else {					
+					retryConnection();
+					break;
 				}
-				
-				LudoServer.playerPrintWriters.add(output);
-				
-				if (LudoServer.serverPlayers.size() == 4) {
-					output.println("GAME FULL - STARTING GAME NOW");
-				}
+			}
+			
+			LudoServer.playerPrintWriters.add(output);
+			
+			if (LudoServer.serverPlayers.size() == 4) {
+				gameLobbyStart();
 			}
 		} catch (IOException e) {
 			
 		}
 	}
+	
+	public void playerConnection() {
+		String playerIP = commSocket.getRemoteSocketAddress().toString();
+
+		LudoServerPlayer player = new LudoServerPlayer(playerIP);
+		LudoServer.serverPlayers.add(player);
+		
+		output.println("SUCCESSFULLY CONNECTED TO GAME");
+		output.println("YOU ARE PLAYER " + player.getPlayerID() + " with color " + player.getPlayerColor());
+		
+		//BUG TESTING
+		System.out.println(LudoServer.serverPlayers.size());
+		System.out.println("player " + player.getPlayerID() + " ip address:" );
+		System.out.println("	" + player.getPlayerIP());
+		System.out.println("player " + player.getPlayerID() + " is " + player.getPlayerColor());
 		
 		
 		
-//		LudoServerPlayer testPlayer = new LudoServerPlayer("192.168.10.2");
-//		LudoServerPlayer testPlayer2 = new LudoServerPlayer("192.168.10.3");
-//		
-//		System.out.println(testPlayer.getPlayerID());
-//		System.out.println(testPlayer2.getPlayerID());
-//		
 	}
+	
+	private void retryConnection() throws IOException {
+		output.println("GAME ALREADY IN PROGRESS");
+		output.close();
+		commSocket.close();
+	}	
+	
+	private void gameLobbyStart() {
+		for(PrintWriter output : LudoServer.playerPrintWriters) {
+			output.println("GAME LOBBY FULL - STARTING GAME NOW");
+		}
+	}
+}
