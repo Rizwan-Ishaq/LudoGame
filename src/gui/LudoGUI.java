@@ -71,31 +71,36 @@ public class LudoGUI extends JFrame implements ActionListener{
 
 	private void border() {
 		for(int i = 0; i < 12; i++) {
-			red = new JButton("redBorder");
+			red = new JButton();
 			border.add(red);
-			borderColor("red", red);
+			red.setBackground(Color.RED);
+			red.setEnabled(false);
 		}
 		
 		for(int i = 0; i < 12; i++) {
-			green = new JButton("greenBorder");
+			green = new JButton();
 			border.add(green);
-			borderColor("green", green);
+			green.setBackground(Color.GREEN);
+			green.setEnabled(false);
 		}
 		
 		for(int i = 0; i < 12; i++) {
-			blue = new JButton("blueBorder");
+			blue = new JButton();
 			border.add(blue);
-			borderColor("blue", blue);
+			blue.setBackground(Color.BLUE);
+			blue.setEnabled(false);
 		}
 		
 		for(int i = 0; i < 12; i++) {
-			yellow = new JButton("yellowBorder");
+			yellow = new JButton();
 			border.add(yellow);
-			borderColor("yellow", yellow);
+			yellow.setBackground(Color.YELLOW);
+			yellow.setEnabled(false);
 		}
 		
-		black = new JButton("blackBorder");
-		borderColor("black", black);
+		black = new JButton();
+		black.setBackground(Color.BLACK);
+		black.setEnabled(false);
 	}
 	
 	private void players() {
@@ -330,11 +335,6 @@ public class LudoGUI extends JFrame implements ActionListener{
 		Image img = new ImageIcon("pieces/" + icon + ".jpg").getImage();
         button.setIcon(new ImageIcon(img));
     }
-	
-	private void borderColor(String color, JButton tile) {
-		Image img = new ImageIcon("border/" + color + ".jpg").getImage();
-        tile.setIcon(new ImageIcon(img));
-	}
 	
 	private void texture(String texture, JButton tile) {
 		Image img = new ImageIcon("tiles/" + texture + ".jpg").getImage();
