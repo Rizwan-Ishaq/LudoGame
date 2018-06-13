@@ -1,3 +1,4 @@
+package game;
 import java.io.*;
 import java.net.*;
 import java.util.Random;
@@ -36,11 +37,5 @@ public class TestClient {
 //		System.out.println(diceRoll());
 //		System.out.println(diceRoll());
 //		System.out.println(diceRoll());
-	}
-	
-	public static int diceRoll() {
-		Random diceVal = new Random();
-		return diceVal.nextInt(6)+1;
-		
 	}
 }
