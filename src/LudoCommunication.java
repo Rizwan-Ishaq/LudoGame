@@ -34,7 +34,7 @@ public class LudoCommunication extends Thread{
 			LudoServer.playerPrintWriters.add(output);
 			
 			if (LudoServer.serverPlayers.size() == 4) {
-				gameLobbyStart();
+				broadcastOutput("GAME LOBBY FULL - STARTING GAME NOW");
 			}
 		} catch (IOException e) {
 			
@@ -66,9 +66,9 @@ public class LudoCommunication extends Thread{
 		commSocket.close();
 	}	
 	
-	private void gameLobbyStart() {
+	private void broadcastOutput(String message) {
 		for(PrintWriter output : LudoServer.playerPrintWriters) {
-			output.println("GAME LOBBY FULL - STARTING GAME NOW");
+			output.println(message);
 		}
 	}
 }

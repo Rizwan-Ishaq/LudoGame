@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class TestClient {
@@ -8,7 +9,11 @@ public class TestClient {
 	private static final int PORT = 1337;
 	static BufferedReader in;
     static PrintWriter out;
-	
+    private static ArrayList<String> messages = new ArrayList<String>();
+    private static String playerNumber;
+    private static String playerColor;
+    
+    
 	public static void conn() throws IOException {
 		Socket socket = new Socket(host, PORT);
 		
@@ -19,8 +24,16 @@ public class TestClient {
 	    	String message = in.readLine();
 	    	if (!(message == null)) {
 	    		System.out.println(message);
+	    		if(!(messages.contains(message))){
+	    			messages.add(message);
+	    		}
+	    		if(messages.get(0).equals("SUCCESSFULLY CONNECTED TO GAME")) {
+	    			playerNumber = messages.get(1).substring(14,16);
+	    			playerColor = messages.get(1).substring(28);
+	    		}
 	    	}
 	    	
+	
 	    	// SPLIT MESSAGE
 	    	// IF SÆTNING SOM TJEKKER SPLITTET MESSAGE
 	    	// INDE I IF SÆTNING ER DER METODEKALD TIL DE FORSKELLIGE HANDLINGER
