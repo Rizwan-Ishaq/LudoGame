@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class LudoCommunication extends Thread{
 	BufferedReader input;
@@ -7,6 +8,11 @@ public class LudoCommunication extends Thread{
 	InputStream in;
 	OutputStream out;
 	String playerIP;
+	int winnerPlayer;
+	LudoServerPlayer player;
+	Boolean winnerFound = false;
+	String diceRollString;
+	ArrayList<String> messages = new ArrayList<String>();
 	//String clientInput
 	
 	private Socket commSocket;
@@ -21,20 +27,22 @@ public class LudoCommunication extends Thread{
 			output = new PrintWriter(commSocket.getOutputStream(), true);
 			
 			while(true) {
+					    		
 				
 				if (LudoServer.serverPlayers.size() < 4) {
 					playerConnection();
 					break;
 				} else {					
 					retryConnection();
-					break;
 				}
+				
 			}
 			
 			LudoServer.playerPrintWriters.add(output);
-			
-			if (LudoServer.serverPlayers.size() == 4) {
-				broadcastOutput("GAME LOBBY FULL - STARTING GAME NOW");
+			while (true ) {			
+				if (LudoServer.serverPlayers.size() == 4) {
+					gameStart();
+				}
 			}
 		} catch (IOException e) {
 			
@@ -44,7 +52,7 @@ public class LudoCommunication extends Thread{
 	public void playerConnection() {
 		String playerIP = commSocket.getRemoteSocketAddress().toString();
 
-		LudoServerPlayer player = new LudoServerPlayer(playerIP);
+		player = new LudoServerPlayer(playerIP);
 		LudoServer.serverPlayers.add(player);
 		
 		output.println("SUCCESSFULLY CONNECTED TO GAME");
@@ -70,5 +78,45 @@ public class LudoCommunication extends Thread{
 		for(PrintWriter output : LudoServer.playerPrintWriters) {
 			output.println(message);
 		}
+	}
+	
+	private void gameStart() throws IOException {
+		broadcastOutput("GAME LOBBY FULL - STARTING GAME NOW");
+		while(!winnerFound == true) {
+			
+			
+	    	
+			System.out.println("WHILE LOOP");
+			for (int i = 1; i<=4; i++) {
+				System.out.println("FOR LOOP");
+				broadcastOutput("DICE ROLL PLAYER " + i);
+				System.out.println("input read line: " + input.readLine());
+				if (diceRollString.startsWith("DICE ROLL VALUE")) {
+					System.out.println(diceRollString);
+					int diceVal = Integer.valueOf(diceRollString.substring(16));
+					
+					player.setCurrPos(diceVal);
+					
+					System.out.println(diceVal);
+					
+					output.println("NEW POS PLAYER " + player.getPlayerID() + " " + player.getCurrPos());
+					
+					System.out.println("NEW POS PLAYER");
+					
+					if (player.getCurrPos() == player.getWinPos()) {
+						winnerPlayer = player.getPlayerID();
+						winnerFound = true;
+						break;
+					}	
+		    		
+		    	} else {
+		    		System.out.println("diceRollString error");
+		    	}
+		    	
+				
+			}
+		}
+		
+		broadcastOutput("GAME ENDED - PLAYER " + winnerPlayer + " WON THE GAME");
 	}
 }
