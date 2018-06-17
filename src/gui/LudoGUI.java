@@ -11,19 +11,29 @@ import javax.swing.*;
 
 import org.w3c.dom.css.Counter;
 
-import game.DiceRoll;
+import com.sun.xml.internal.ws.dump.LoggingDumpTube.Position;
+
+import game.TestClient;
 
 public class LudoGUI extends JFrame implements ActionListener{
-	private JPanel board1, board2, board3, board4;
-	private JPanel menu;
-	private JButton red, green, blue, yellow, black;
-	private JButton rollDice, dice;
-	private JTextArea info, bufferArea;
-	private int roll;
-	private ArrayList<JButton> pieces = new ArrayList<JButton>();
-	private ArrayList<JButton> tiles = new ArrayList<JButton>();
-	private ArrayList<JButton> border = new ArrayList<JButton>();
-	private ArrayList<JTextArea> buffer = new ArrayList<JTextArea>();
+	public JPanel board1, board2, board3, board4;
+	public JPanel menu;
+	public JButton red, green, blue, yellow, black;
+	public static JButton rollDice;
+	public JButton dice;
+	public static JTextArea info;
+	public JTextArea bufferArea;
+	public static int roll;
+	public static ArrayList<JButton> pieces = new ArrayList<JButton>();
+	public ArrayList<JButton> tiles = new ArrayList<JButton>();
+	public ArrayList<JButton> border = new ArrayList<JButton>();
+	public ArrayList<JTextArea> buffer = new ArrayList<JTextArea>();
+//	public static ArrayList<Integer> player1 = new ArrayList<Integer>();
+//	public static ArrayList<Integer> player2 = new ArrayList<Integer>();
+//	public static ArrayList<Integer> player3 = new ArrayList<Integer>();
+//	public static ArrayList<Integer> player4 = new ArrayList<Integer>();
+	public static ArrayList<Integer> position = new ArrayList<Integer>();
+	
 	
 	public LudoGUI() {        
 		getContentPane().setLayout(new GridLayout(1,5));
@@ -47,20 +57,21 @@ public class LudoGUI extends JFrame implements ActionListener{
 		row11();
 	}
 
-	private void buffer() {
+	public void buffer() {
 		for(int i = 0; i < 11; i++) {
 			bufferArea = new JTextArea();
 			buffer.add(bufferArea);
 		}
 	}
 
-	private void menu() {
+	public void menu() {
 		menu = new JPanel();
 		menu.setLayout(new GridLayout(6,1));
 		getContentPane().add(menu);
 		
         menu.add(rollDice = new JButton("Roll Dice"));
         rollDice.addActionListener(this);
+        rollDice.setEnabled(false);
         
         menu.add(dice = new JButton());
         rolled();
@@ -69,7 +80,7 @@ public class LudoGUI extends JFrame implements ActionListener{
         info.setText("player1's turn, roll the dice");
 	}
 
-	private void border() {
+	public void border() {
 		for(int i = 0; i < 12; i++) {
 			red = new JButton();
 			border.add(red);
@@ -103,13 +114,14 @@ public class LudoGUI extends JFrame implements ActionListener{
 		black.setEnabled(false);
 	}
 	
-	private void players() {
+	public void players() {
 		for(int i = 0; i < 4; i++) {
         	JButton red = new JButton("red");
         	pieces.add(red);
         	icon("red", red);
         	red.addActionListener(this);
         	red.setEnabled(false);
+        	position.add(-1);
         }
         
         for(int i = 0; i < 4; i++) {
@@ -118,6 +130,7 @@ public class LudoGUI extends JFrame implements ActionListener{
         	icon("green", green);
         	green.addActionListener(this);
         	green.setEnabled(false);
+        	position.add(-1);
         }
         
         for(int i = 0; i < 4; i++) {
@@ -126,6 +139,7 @@ public class LudoGUI extends JFrame implements ActionListener{
         	icon("blue", blue);
         	blue.addActionListener(this);
         	blue.setEnabled(false);
+        	position.add(-1);
         }
         
         for(int i = 0; i <= 4; i++) {
@@ -134,10 +148,11 @@ public class LudoGUI extends JFrame implements ActionListener{
         	icon("yellow", yellow);
         	yellow.addActionListener(this);
         	yellow.setEnabled(false);
+        	position.add(-1);
         }
 	}
-	
-	private void board() {
+
+	public void board() {
 		board1 = new JPanel();
 		board1.setLayout(new GridLayout(11,3));
 		getContentPane().add(board1);
@@ -161,7 +176,7 @@ public class LudoGUI extends JFrame implements ActionListener{
         }
 	}
 
-	private void row1() {
+	public void row1() {
 		board1.add(border.get(0));
 		board1.add(border.get(1));
 		board1.add(border.get(2));
@@ -176,7 +191,7 @@ public class LudoGUI extends JFrame implements ActionListener{
 		board4.add(buffer.get(0));
 	}
 
-	private void row2() {
+	public void row2() {
 		board1.add(border.get(4));
 		board1.add(pieces.get(0));
 		board1.add(pieces.get(1));
@@ -191,7 +206,7 @@ public class LudoGUI extends JFrame implements ActionListener{
 		board4.add(buffer.get(1));
 	}
 
-	private void row3() {
+	public void row3() {
 		board1.add(border.get(6));
 		board1.add(pieces.get(2));
 		board1.add(pieces.get(3));
@@ -206,7 +221,7 @@ public class LudoGUI extends JFrame implements ActionListener{
 		board4.add(buffer.get(2));
 	}
 	
-	private void row4() {
+	public void row4() {
 		board1.add(border.get(8));
 		board1.add(border.get(9));
 		board1.add(border.get(10));
@@ -221,7 +236,7 @@ public class LudoGUI extends JFrame implements ActionListener{
 		board4.add(buffer.get(3));
 	}
 	
-	private void row5() {
+	public void row5() {
 		board1.add(tiles.get(0));
 		board1.add(tiles.get(1));
 		board1.add(tiles.get(2));
@@ -236,7 +251,7 @@ public class LudoGUI extends JFrame implements ActionListener{
 		board4.add(buffer.get(4));
 	}
 	
-	private void row6() {
+	public void row6() {
 		board1.add(tiles.get(39));
 		board1.add(tiles.get(40));
 		board1.add(tiles.get(41));
@@ -251,7 +266,7 @@ public class LudoGUI extends JFrame implements ActionListener{
 		board4.add(buffer.get(5));
 	}
 	
-	private void row7() {
+	public void row7() {
 		board1.add(tiles.get(38));
 		board1.add(tiles.get(37));
 		board1.add(tiles.get(36));
@@ -266,7 +281,7 @@ public class LudoGUI extends JFrame implements ActionListener{
 		board4.add(buffer.get(6));
 	}
 	
-	private void row8() {
+	public void row8() {
 		board1.add(border.get(24));
 		board1.add(border.get(25));
 		board1.add(border.get(26));
@@ -281,7 +296,7 @@ public class LudoGUI extends JFrame implements ActionListener{
 		board4.add(buffer.get(7));
 	}
 	
-	private void row9() {
+	public void row9() {
 		board1.add(border.get(28));
 		board1.add(pieces.get(8));
 		board1.add(pieces.get(9));
@@ -296,7 +311,7 @@ public class LudoGUI extends JFrame implements ActionListener{
 		board4.add(buffer.get(8));
 	}
 	
-	private void row10() {
+	public void row10() {
 		board1.add(border.get(30));
 		board1.add(pieces.get(12));
 		board1.add(pieces.get(13));
@@ -311,7 +326,7 @@ public class LudoGUI extends JFrame implements ActionListener{
 		board4.add(buffer.get(9));
 	}
 	
-	private void row11() {
+	public void row11() {
 		board1.add(border.get(32));
 		board1.add(border.get(33));
 		board1.add(border.get(34));
@@ -326,19 +341,171 @@ public class LudoGUI extends JFrame implements ActionListener{
 		board4.add(buffer.get(10));
 	}
 
-	private void rolled() {
+	public void rolled() {
 		Image img = new ImageIcon("dice/" + roll + ".jpg").getImage();
         dice.setIcon(new ImageIcon(img));
 	}
 	
-	private void icon(String icon, JButton button) {
+	public void icon(String icon, JButton button) {
 		Image img = new ImageIcon("pieces/" + icon + ".jpg").getImage();
         button.setIcon(new ImageIcon(img));
     }
 	
-	private void texture(String texture, JButton tile) {
+	public void texture(String texture, JButton tile) {
 		Image img = new ImageIcon("tiles/" + texture + ".jpg").getImage();
         tile.setIcon(new ImageIcon(img)); 
+	}
+	
+	public static int getRoll() {
+		return roll;
+	}
+
+	public static JButton getRollDice() {
+		return rollDice;
+	}
+
+	public JPanel getBoard1() {
+		return board1;
+	}
+
+	public void setBoard1(JPanel board1) {
+		this.board1 = board1;
+	}
+
+	public JPanel getBoard2() {
+		return board2;
+	}
+
+	public void setBoard2(JPanel board2) {
+		this.board2 = board2;
+	}
+
+	public JPanel getBoard3() {
+		return board3;
+	}
+
+	public void setBoard3(JPanel board3) {
+		this.board3 = board3;
+	}
+
+	public JPanel getBoard4() {
+		return board4;
+	}
+
+	public void setBoard4(JPanel board4) {
+		this.board4 = board4;
+	}
+
+	public JPanel getMenu() {
+		return menu;
+	}
+
+	public void setMenu(JPanel menu) {
+		this.menu = menu;
+	}
+
+	public JButton getRed() {
+		return red;
+	}
+
+	public void setRed(JButton red) {
+		this.red = red;
+	}
+
+	public JButton getGreen() {
+		return green;
+	}
+
+	public void setGreen(JButton green) {
+		this.green = green;
+	}
+
+	public JButton getBlue() {
+		return blue;
+	}
+
+	public void setBlue(JButton blue) {
+		this.blue = blue;
+	}
+
+	public JButton getYellow() {
+		return yellow;
+	}
+
+	public void setYellow(JButton yellow) {
+		this.yellow = yellow;
+	}
+
+	public JButton getBlack() {
+		return black;
+	}
+
+	public void setBlack(JButton black) {
+		this.black = black;
+	}
+
+	public JButton getDice() {
+		return dice;
+	}
+
+	public void setDice(JButton dice) {
+		this.dice = dice;
+	}
+
+	public static JTextArea getInfo() {
+		return info;
+	}
+
+	public void setInfo(JTextArea info) {
+		this.info = info;
+	}
+
+	public JTextArea getBufferArea() {
+		return bufferArea;
+	}
+
+	public void setBufferArea(JTextArea bufferArea) {
+		this.bufferArea = bufferArea;
+	}
+
+	public static ArrayList<JButton> getPieces() {
+		return pieces;
+	}
+
+	public void setPieces(ArrayList<JButton> pieces) {
+		this.pieces = pieces;
+	}
+
+	public ArrayList<JButton> getTiles() {
+		return tiles;
+	}
+
+	public void setTiles(ArrayList<JButton> tiles) {
+		this.tiles = tiles;
+	}
+
+	public ArrayList<JButton> getBorder() {
+		return border;
+	}
+
+	public void setBorder(ArrayList<JButton> border) {
+		this.border = border;
+	}
+
+	public ArrayList<JTextArea> getBuffer() {
+		return buffer;
+	}
+
+	public void setBuffer(ArrayList<JTextArea> buffer) {
+		this.buffer = buffer;
+	}
+
+	public static void setRollDice(JButton rollDice) {
+		LudoGUI.rollDice = rollDice;
+	}
+
+	public static void setRoll(int roll) {
+		LudoGUI.roll = roll;
 	}
 
 	public static void main(String[] args) {
@@ -353,16 +520,19 @@ public class LudoGUI extends JFrame implements ActionListener{
 	
 	public void actionPerformed(ActionEvent e) {
     	if (e.getSource() == rollDice) {
-    		roll = DiceRoll.diceRoll();
+    		roll = game.TestClient.diceRoll();
     		rollDice.setEnabled(false);
-    		String text = info.getText();
-    		if(text.startsWith("player1")) {
-    			if(roll <= 6) {
-    				info.setText("You may move all your pieces");
-    				for(int i = 0; i <= 3; i++) {
-    					JButton button = pieces.get(i);
-    					button.setEnabled(true);
-    				}
+	   		TestClient.enabled(TestClient.player);	
+    	}
+    		
+//    		String text = info.getText();
+//    		if(text.startsWith("player1")) {
+//    			if(roll <= 6) {
+//    				info.setText("You may move all your pieces");
+//    				for(int i = 0; i <= 3; i++) {
+//    					JButton button = pieces.get(i);
+//    					button.setEnabled(true);
+//    				}
 //    			} else if(buttonval(pieces.get(0)) == -1 && buttonval(pieces.get(1)) == -1
 //    					&& buttonval(pieces.get(2)) == -1 && buttonval(pieces.get(3)) == -1) {
 //    				if(counter < 3) {
@@ -481,168 +651,270 @@ public class LudoGUI extends JFrame implements ActionListener{
 //    						button.setEnabled(true);
 //    					}
 //    				}
-    			}
-    		}
-    	}
+//    			}
+//    		}
+//    	}
     	
     	if (e.getSource() == pieces.get(0)) {
-    		//functionality
-    		info.setText("player2's turn");
-			for(int i = 0; i <= 3; i++) {
-				JButton button = pieces.get(i);
-				button.setEnabled(false);
+    		TestClient.setSelected(position.get(0));
+    		TestClient.setSelectedIndex(0);
+   			for(JButton piece : pieces) {
+   				piece.setEnabled(false);
+   			}
+   			
+   			try {
+				TestClient.sendPos();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-    		rollDice.setEnabled(true);
+    		//functionality
+//    		info.setText("player2's turn");
+//			for(int i = 0; i <= 3; i++) {
+//				JButton button = pieces.get(i);
+//				button.setEnabled(false);
+//			}
+//    		rollDice.setEnabled(true);
     	}
     	
     	if (e.getSource() == pieces.get(1)) {
     		//functionality
-    		info.setText("player2's turn");
-    		for(int i = 0; i <= 3; i++) {
-				JButton button = pieces.get(i);
-				button.setEnabled(false);
+    		TestClient.setSelected(position.get(1));
+    		TestClient.setSelectedIndex(1);
+    		for(JButton piece : pieces) {
+   				piece.setEnabled(false);
+   			}
+    		
+   			try {
+				TestClient.sendPos();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-    		rollDice.setEnabled(true);
     	}
     	
     	if (e.getSource() == pieces.get(2)) {
     		//functionality
-    		info.setText("player2's turn");
-    		for(int i = 0; i <= 3; i++) {
-				JButton button = pieces.get(i);
-				button.setEnabled(false);
+    		TestClient.setSelected(position.get(2));
+    		TestClient.setSelectedIndex(2);
+    		for(JButton piece : pieces) {
+   				piece.setEnabled(false);
+   			}
+    		
+   			try {
+				TestClient.sendPos();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-    		rollDice.setEnabled(true);
     	}
     	
     	if (e.getSource() == pieces.get(3)) {
     		//functionality
-    		info.setText("player2's turn");
-    		for(int i = 0; i <= 3; i++) {
-				JButton button = pieces.get(i);
-				button.setEnabled(false);
+    		TestClient.setSelected(position.get(3));
+    		TestClient.setSelectedIndex(3);
+    		for(JButton piece : pieces) {
+   				piece.setEnabled(false);
+   			}
+    		
+   			try {
+				TestClient.sendPos();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-    		rollDice.setEnabled(true);
     	}
     	
     	if (e.getSource() == pieces.get(4)) {
     		//functionality
-    		info.setText("player3's turn");
-			for(int i = 4; i <= 7; i++) {
-				JButton button = pieces.get(i);
-				button.setEnabled(false);
+    		TestClient.setSelected(position.get(4));
+    		TestClient.setSelectedIndex(4);
+    		for(JButton piece : pieces) {
+   				piece.setEnabled(false);
+   			}
+    		
+   			try {
+				TestClient.sendPos();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-    		rollDice.setEnabled(true);
     	}
     	
     	if (e.getSource() == pieces.get(5)) {
     		//functionality
-    		info.setText("player3's turn");
-    		for(int i = 4; i <= 7; i++) {
-				JButton button = pieces.get(i);
-				button.setEnabled(false);
+    		TestClient.setSelected(position.get(5));
+    		TestClient.setSelectedIndex(5);
+    		for(JButton piece : pieces) {
+   				piece.setEnabled(false);
+   			}
+    		
+   			try {
+				TestClient.sendPos();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-    		rollDice.setEnabled(true);
     	}
     	
     	if (e.getSource() == pieces.get(6)) {
     		//functionality
-    		info.setText("player3's turn");
-    		for(int i = 4; i <= 7; i++) {
-				JButton button = pieces.get(i);
-				button.setEnabled(false);
+    		TestClient.setSelected(position.get(6));
+    		TestClient.setSelectedIndex(6);
+    		for(JButton piece : pieces) {
+   				piece.setEnabled(false);
+   			}
+    		
+   			try {
+				TestClient.sendPos();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-    		rollDice.setEnabled(true);
     	}
     	
     	if (e.getSource() == pieces.get(7)) {
     		//functionality
-    		info.setText("player3's turn");
-    		for(int i = 4; i <= 7; i++) {
-				JButton button = pieces.get(i);
-				button.setEnabled(false);
+    		TestClient.setSelected(position.get(7));
+    		TestClient.setSelectedIndex(7);
+    		for(JButton piece : pieces) {
+   				piece.setEnabled(false);
+   			}
+    		
+   			try {
+				TestClient.sendPos();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-    		rollDice.setEnabled(true);
     	}
     	
     	if (e.getSource() == pieces.get(8)) {
     		//functionality
-    		info.setText("player4's turn");
-    		for(int i = 8; i <= 11; i++) {
-				JButton button = pieces.get(i);
-				button.setEnabled(false);
+    		TestClient.setSelected(position.get(8));
+    		TestClient.setSelectedIndex(8);
+    		for(JButton piece : pieces) {
+   				piece.setEnabled(false);
+   			}
+    		
+   			try {
+				TestClient.sendPos();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-    		rollDice.setEnabled(true);
     	}
     	
     	if (e.getSource() == pieces.get(9)) {
     		//functionality
-    		info.setText("player4's turn");
-    		for(int i = 8; i <= 11; i++) {
-				JButton button = pieces.get(i);
-				button.setEnabled(false);
+    		TestClient.setSelected(position.get(9));
+    		TestClient.setSelectedIndex(9);
+    		for(JButton piece : pieces) {
+   				piece.setEnabled(false);
+   			}
+    		
+   			try {
+				TestClient.sendPos();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-    		rollDice.setEnabled(true);
     	}
     	
     	if (e.getSource() == pieces.get(10)) {
     		//functionality
-    		info.setText("player4's turn");
-    		for(int i = 8; i <= 11; i++) {
-				JButton button = pieces.get(i);
-				button.setEnabled(false);
+    		TestClient.setSelected(position.get(10));
+    		TestClient.setSelectedIndex(10);
+    		for(JButton piece : pieces) {
+   				piece.setEnabled(false);
+   			}
+    		
+   			try {
+				TestClient.sendPos();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-    		rollDice.setEnabled(true);
     	}
     	
     	if (e.getSource() == pieces.get(11)) {
     		//functionality
-    		info.setText("player4's turn");
-    		for(int i = 8; i <= 11; i++) {
-				JButton button = pieces.get(i);
-				button.setEnabled(false);
+    		TestClient.setSelected(position.get(11));
+    		TestClient.setSelectedIndex(11);
+    		for(JButton piece : pieces) {
+   				piece.setEnabled(false);
+   			}
+    		
+   			try {
+				TestClient.sendPos();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-    		rollDice.setEnabled(true);
     	}
     	
     	if (e.getSource() == pieces.get(12)) {
     		//functionality
-    		info.setText("player1's turn");
-			for(int i = 12; i <= 15; i++) {
-				JButton button = pieces.get(i);
-				button.setEnabled(false);
+    		TestClient.setSelected(position.get(12));
+    		TestClient.setSelectedIndex(12);
+    		for(JButton piece : pieces) {
+   				piece.setEnabled(false);
+   			}
+    		
+   			try {
+				TestClient.sendPos();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-    		rollDice.setEnabled(true);
     	}
     	
     	if (e.getSource() == pieces.get(13)) {
     		//functionality
-    		info.setText("player1's turn");
-    		for(int i = 12; i <= 15; i++) {
-				JButton button = pieces.get(i);
-				button.setEnabled(false);
+    		TestClient.setSelected(position.get(13));
+    		TestClient.setSelectedIndex(13);
+    		for(JButton piece : pieces) {
+   				piece.setEnabled(false);
+   			}
+    		
+   			try {
+				TestClient.sendPos();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-    		rollDice.setEnabled(true);
     	}
     	
     	if (e.getSource() == pieces.get(14)) {
     		//functionality
-    		info.setText("player1's turn");
-    		for(int i = 12; i <= 15; i++) {
-				JButton button = pieces.get(i);
-				button.setEnabled(false);
+    		TestClient.setSelected(position.get(14));
+    		TestClient.setSelectedIndex(14);
+    		for(JButton piece : pieces) {
+   				piece.setEnabled(false);
+   			}
+    		
+   			try {
+				TestClient.sendPos();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-    		rollDice.setEnabled(true);
     	}
     	
     	if (e.getSource() == pieces.get(15)) {
     		//functionality
-    		info.setText("player1's turn");
-    		for(int i = 12; i <= 15; i++) {
-				JButton button = pieces.get(i);
-				button.setEnabled(false);
+    		TestClient.setSelected(position.get(15));
+    		TestClient.setSelectedIndex(15);
+    		for(JButton piece : pieces) {
+   				piece.setEnabled(false);
+   			}
+    		
+   			try {
+				TestClient.sendPos();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-    		rollDice.setEnabled(true);
     	}
 	} 
 }
