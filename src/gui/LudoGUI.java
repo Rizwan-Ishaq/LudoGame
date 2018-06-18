@@ -23,7 +23,7 @@ public class LudoGUI extends JFrame implements ActionListener{
 	public JButton dice;
 	public static JTextArea info;
 	public JTextArea bufferArea;
-	public static int roll;
+	public static String roll;
 	public static ArrayList<JButton> pieces = new ArrayList<JButton>();
 	public ArrayList<JButton> tiles = new ArrayList<JButton>();
 	public ArrayList<JButton> border = new ArrayList<JButton>();
@@ -356,7 +356,7 @@ public class LudoGUI extends JFrame implements ActionListener{
         tile.setIcon(new ImageIcon(img)); 
 	}
 	
-	public static int getRoll() {
+	public static String getRoll() {
 		return roll;
 	}
 
@@ -504,18 +504,8 @@ public class LudoGUI extends JFrame implements ActionListener{
 		LudoGUI.rollDice = rollDice;
 	}
 
-	public static void setRoll(int roll) {
+	public static void setRoll(String roll) {
 		LudoGUI.roll = roll;
-	}
-
-	public static void main(String[] args) {
-		LudoGUI simplegui = new LudoGUI();
-        
-        simplegui.setTitle("Ludo"); 
-        simplegui.setSize(1350,990);    
-        simplegui.setResizable(false);   
-		simplegui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        simplegui.setVisible(true);
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -656,18 +646,12 @@ public class LudoGUI extends JFrame implements ActionListener{
 //    	}
     	
     	if (e.getSource() == pieces.get(0)) {
+    		TestClient.sendPos();
     		TestClient.setSelected(position.get(0));
     		TestClient.setSelectedIndex(0);
    			for(JButton piece : pieces) {
    				piece.setEnabled(false);
    			}
-   			
-   			try {
-				TestClient.sendPos();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
     		//functionality
 //    		info.setText("player2's turn");
 //			for(int i = 0; i <= 3; i++) {
@@ -676,245 +660,245 @@ public class LudoGUI extends JFrame implements ActionListener{
 //			}
 //    		rollDice.setEnabled(true);
     	}
-    	
-    	if (e.getSource() == pieces.get(1)) {
-    		//functionality
-    		TestClient.setSelected(position.get(1));
-    		TestClient.setSelectedIndex(1);
-    		for(JButton piece : pieces) {
-   				piece.setEnabled(false);
-   			}
-    		
-   			try {
-				TestClient.sendPos();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-    	}
-    	
-    	if (e.getSource() == pieces.get(2)) {
-    		//functionality
-    		TestClient.setSelected(position.get(2));
-    		TestClient.setSelectedIndex(2);
-    		for(JButton piece : pieces) {
-   				piece.setEnabled(false);
-   			}
-    		
-   			try {
-				TestClient.sendPos();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-    	}
-    	
-    	if (e.getSource() == pieces.get(3)) {
-    		//functionality
-    		TestClient.setSelected(position.get(3));
-    		TestClient.setSelectedIndex(3);
-    		for(JButton piece : pieces) {
-   				piece.setEnabled(false);
-   			}
-    		
-   			try {
-				TestClient.sendPos();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-    	}
-    	
-    	if (e.getSource() == pieces.get(4)) {
-    		//functionality
-    		TestClient.setSelected(position.get(4));
-    		TestClient.setSelectedIndex(4);
-    		for(JButton piece : pieces) {
-   				piece.setEnabled(false);
-   			}
-    		
-   			try {
-				TestClient.sendPos();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-    	}
-    	
-    	if (e.getSource() == pieces.get(5)) {
-    		//functionality
-    		TestClient.setSelected(position.get(5));
-    		TestClient.setSelectedIndex(5);
-    		for(JButton piece : pieces) {
-   				piece.setEnabled(false);
-   			}
-    		
-   			try {
-				TestClient.sendPos();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-    	}
-    	
-    	if (e.getSource() == pieces.get(6)) {
-    		//functionality
-    		TestClient.setSelected(position.get(6));
-    		TestClient.setSelectedIndex(6);
-    		for(JButton piece : pieces) {
-   				piece.setEnabled(false);
-   			}
-    		
-   			try {
-				TestClient.sendPos();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-    	}
-    	
-    	if (e.getSource() == pieces.get(7)) {
-    		//functionality
-    		TestClient.setSelected(position.get(7));
-    		TestClient.setSelectedIndex(7);
-    		for(JButton piece : pieces) {
-   				piece.setEnabled(false);
-   			}
-    		
-   			try {
-				TestClient.sendPos();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-    	}
-    	
-    	if (e.getSource() == pieces.get(8)) {
-    		//functionality
-    		TestClient.setSelected(position.get(8));
-    		TestClient.setSelectedIndex(8);
-    		for(JButton piece : pieces) {
-   				piece.setEnabled(false);
-   			}
-    		
-   			try {
-				TestClient.sendPos();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-    	}
-    	
-    	if (e.getSource() == pieces.get(9)) {
-    		//functionality
-    		TestClient.setSelected(position.get(9));
-    		TestClient.setSelectedIndex(9);
-    		for(JButton piece : pieces) {
-   				piece.setEnabled(false);
-   			}
-    		
-   			try {
-				TestClient.sendPos();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-    	}
-    	
-    	if (e.getSource() == pieces.get(10)) {
-    		//functionality
-    		TestClient.setSelected(position.get(10));
-    		TestClient.setSelectedIndex(10);
-    		for(JButton piece : pieces) {
-   				piece.setEnabled(false);
-   			}
-    		
-   			try {
-				TestClient.sendPos();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-    	}
-    	
-    	if (e.getSource() == pieces.get(11)) {
-    		//functionality
-    		TestClient.setSelected(position.get(11));
-    		TestClient.setSelectedIndex(11);
-    		for(JButton piece : pieces) {
-   				piece.setEnabled(false);
-   			}
-    		
-   			try {
-				TestClient.sendPos();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-    	}
-    	
-    	if (e.getSource() == pieces.get(12)) {
-    		//functionality
-    		TestClient.setSelected(position.get(12));
-    		TestClient.setSelectedIndex(12);
-    		for(JButton piece : pieces) {
-   				piece.setEnabled(false);
-   			}
-    		
-   			try {
-				TestClient.sendPos();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-    	}
-    	
-    	if (e.getSource() == pieces.get(13)) {
-    		//functionality
-    		TestClient.setSelected(position.get(13));
-    		TestClient.setSelectedIndex(13);
-    		for(JButton piece : pieces) {
-   				piece.setEnabled(false);
-   			}
-    		
-   			try {
-				TestClient.sendPos();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-    	}
-    	
-    	if (e.getSource() == pieces.get(14)) {
-    		//functionality
-    		TestClient.setSelected(position.get(14));
-    		TestClient.setSelectedIndex(14);
-    		for(JButton piece : pieces) {
-   				piece.setEnabled(false);
-   			}
-    		
-   			try {
-				TestClient.sendPos();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-    	}
-    	
-    	if (e.getSource() == pieces.get(15)) {
-    		//functionality
-    		TestClient.setSelected(position.get(15));
-    		TestClient.setSelectedIndex(15);
-    		for(JButton piece : pieces) {
-   				piece.setEnabled(false);
-   			}
-    		
-   			try {
-				TestClient.sendPos();
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-    	}
+//    	
+//    	if (e.getSource() == pieces.get(1)) {
+//    		//functionality
+//    		TestClient.setSelected(position.get(1));
+//    		TestClient.setSelectedIndex(1);
+//    		for(JButton piece : pieces) {
+//   				piece.setEnabled(false);
+//   			}
+//    		
+//   			try {
+//				TestClient.sendPos();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//    	}
+//    	
+//    	if (e.getSource() == pieces.get(2)) {
+//    		//functionality
+//    		TestClient.setSelected(position.get(2));
+//    		TestClient.setSelectedIndex(2);
+//    		for(JButton piece : pieces) {
+//   				piece.setEnabled(false);
+//   			}
+//    		
+//   			try {
+//				TestClient.sendPos();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//    	}
+//    	
+//    	if (e.getSource() == pieces.get(3)) {
+//    		//functionality
+//    		TestClient.setSelected(position.get(3));
+//    		TestClient.setSelectedIndex(3);
+//    		for(JButton piece : pieces) {
+//   				piece.setEnabled(false);
+//   			}
+//    		
+//   			try {
+//				TestClient.sendPos();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//    	}
+//    	
+//    	if (e.getSource() == pieces.get(4)) {
+//    		//functionality
+//    		TestClient.setSelected(position.get(4));
+//    		TestClient.setSelectedIndex(4);
+//    		for(JButton piece : pieces) {
+//   				piece.setEnabled(false);
+//   			}
+//    		
+//   			try {
+//				TestClient.sendPos();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//    	}
+//    	
+//    	if (e.getSource() == pieces.get(5)) {
+//    		//functionality
+//    		TestClient.setSelected(position.get(5));
+//    		TestClient.setSelectedIndex(5);
+//    		for(JButton piece : pieces) {
+//   				piece.setEnabled(false);
+//   			}
+//    		
+//   			try {
+//				TestClient.sendPos();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//    	}
+//    	
+//    	if (e.getSource() == pieces.get(6)) {
+//    		//functionality
+//    		TestClient.setSelected(position.get(6));
+//    		TestClient.setSelectedIndex(6);
+//    		for(JButton piece : pieces) {
+//   				piece.setEnabled(false);
+//   			}
+//    		
+//   			try {
+//				TestClient.sendPos();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//    	}
+//    	
+//    	if (e.getSource() == pieces.get(7)) {
+//    		//functionality
+//    		TestClient.setSelected(position.get(7));
+//    		TestClient.setSelectedIndex(7);
+//    		for(JButton piece : pieces) {
+//   				piece.setEnabled(false);
+//   			}
+//    		
+//   			try {
+//				TestClient.sendPos();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//    	}
+//    	
+//    	if (e.getSource() == pieces.get(8)) {
+//    		//functionality
+//    		TestClient.setSelected(position.get(8));
+//    		TestClient.setSelectedIndex(8);
+//    		for(JButton piece : pieces) {
+//   				piece.setEnabled(false);
+//   			}
+//    		
+//   			try {
+//				TestClient.sendPos();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//    	}
+//    	
+//    	if (e.getSource() == pieces.get(9)) {
+//    		//functionality
+//    		TestClient.setSelected(position.get(9));
+//    		TestClient.setSelectedIndex(9);
+//    		for(JButton piece : pieces) {
+//   				piece.setEnabled(false);
+//   			}
+//    		
+//   			try {
+//				TestClient.sendPos();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//    	}
+//    	
+//    	if (e.getSource() == pieces.get(10)) {
+//    		//functionality
+//    		TestClient.setSelected(position.get(10));
+//    		TestClient.setSelectedIndex(10);
+//    		for(JButton piece : pieces) {
+//   				piece.setEnabled(false);
+//   			}
+//    		
+//   			try {
+//				TestClient.sendPos();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//    	}
+//    	
+//    	if (e.getSource() == pieces.get(11)) {
+//    		//functionality
+//    		TestClient.setSelected(position.get(11));
+//    		TestClient.setSelectedIndex(11);
+//    		for(JButton piece : pieces) {
+//   				piece.setEnabled(false);
+//   			}
+//    		
+//   			try {
+//				TestClient.sendPos();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//    	}
+//    	
+//    	if (e.getSource() == pieces.get(12)) {
+//    		//functionality
+//    		TestClient.setSelected(position.get(12));
+//    		TestClient.setSelectedIndex(12);
+//    		for(JButton piece : pieces) {
+//   				piece.setEnabled(false);
+//   			}
+//    		
+//   			try {
+//				TestClient.sendPos();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//    	}
+//    	
+//    	if (e.getSource() == pieces.get(13)) {
+//    		//functionality
+//    		TestClient.setSelected(position.get(13));
+//    		TestClient.setSelectedIndex(13);
+//    		for(JButton piece : pieces) {
+//   				piece.setEnabled(false);
+//   			}
+//    		
+//   			try {
+//				TestClient.sendPos();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//    	}
+//    	
+//    	if (e.getSource() == pieces.get(14)) {
+//    		//functionality
+//    		TestClient.setSelected(position.get(14));
+//    		TestClient.setSelectedIndex(14);
+//    		for(JButton piece : pieces) {
+//   				piece.setEnabled(false);
+//   			}
+//    		
+//   			try {
+//				TestClient.sendPos();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//    	}
+//    	
+//    	if (e.getSource() == pieces.get(15)) {
+//    		//functionality
+//    		TestClient.setSelected(position.get(15));
+//    		TestClient.setSelectedIndex(15);
+//    		for(JButton piece : pieces) {
+//   				piece.setEnabled(false);
+//   			}
+//    		
+//   			try {
+//				TestClient.sendPos();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+//    	}
 	} 
 }

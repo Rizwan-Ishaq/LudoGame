@@ -18,8 +18,8 @@ public class LudoCommunication extends Thread{
 	String diceRollString;
 	LudoServerPlayer currPlayer;
 	
-	private Socket commSocket;
-private int diceRoll;
+	public Socket commSocket;
+	public String diceRoll;
 
 	public LudoCommunication(Socket commSocket) {
 		this.commSocket = commSocket;
@@ -42,7 +42,7 @@ private int diceRoll;
 				
 			}
 			
-			LudoServer.playerPrintWriters.add(serverOut);	
+			LudoServer.playerPrintWriters.add(serverOut);
 				if (LudoServer.serverPlayers.size() == 4) {
 					gameStart();
 				}
@@ -59,6 +59,7 @@ private int diceRoll;
 		
 		serverOut.println("SUCCESSFULLY CONNECTED TO GAME");
 		serverOut.println("YOU ARE PLAYER " + player.getPlayerID() + " with color " + player.getPlayerColor());
+		serverOut.println(player.getPlayerIP());
 		
 		System.out.println(LudoServer.serverPlayers.size());
 		System.out.println("player " + player.getPlayerID() + " ip address:" );
@@ -82,52 +83,58 @@ private int diceRoll;
 	}
 	
 	private void gameStart() throws IOException {
-		while(true) {
-			int i = 0;
-			while(winnerFound = false) {
-				broadcastOutput("GAME HAS STARTED");
-				broadcastOutput("player" + i + 1 + "'s turn");
-				broadcastOutput(LudoServer.serverPlayers.get(0).getPlayerIP());
-				diceRoll = serverIn.read();
-				
-				if(i == 0) {
-					playerOne(diceRoll);
-				}
+		broadcastOutput("GAME HAS STARTED");
+		int i = 0;
+		while(!winnerFound == true) {
+			int playernumber = 1;
+			LudoServer.playerPrintWriters.get(i).println(("player" + playernumber + "'s turn"));
+			broadcastOutput(LudoServer.serverPlayers.get(i).getPlayerIP());
+			System.out.println(serverIn.readLine());
+			System.out.println(serverIn.readLine());
+			System.out.println(serverIn.readLine());
+			System.out.println(serverIn.readLine());
+			System.out.println(serverIn.readLine());
+			diceRoll = serverIn.readLine();
 			
-				if(i == 1) {
-					playerTwo(diceRoll);
-				}
+			if(i == 0) {
+				playerOne(diceRoll);
+			}
+		
+			if(i == 1) {
+				playerTwo(diceRoll);
+			}
+		
+			if(i == 2) {
+				playerThree(diceRoll);
+			}
+		
+			if(i == 3) {
+				playerFour(diceRoll);
+			}
 			
-				if(i == 2) {
-					playerThree(diceRoll);
-				}
-			
-				if(i == 3) {
-					playerFour(diceRoll);
-				}
-				
-				if(i == 3) {
-					i = 0;
-				} else {
-					i++;
-				}
+			if(i == 3) {
+				i = 0;
+				playernumber = 1;
+			} else {
+				i++;
+				playernumber++;
 			}
 		}
 	}
 
-	private void playerFour(int eyes) throws IOException {
+	private void playerFour(String eyes) throws IOException {
 		System.out.println(positionIn());
 	}
 
-	private void playerThree(int eyes) throws IOException {
+	private void playerThree(String eyes) throws IOException {
 		System.out.println(positionIn());
 	}
 
-	private void playerTwo(int eyes) throws IOException {
+	private void playerTwo(String eyes) throws IOException {
 		System.out.println(positionIn());
 	}
 
-	private void playerOne(int eyes) throws IOException {
+	private void playerOne(String eyes) throws IOException {
 		System.out.println(positionIn());
 	}
 

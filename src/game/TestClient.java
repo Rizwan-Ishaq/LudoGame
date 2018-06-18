@@ -10,12 +10,12 @@ import javax.swing.JFrame;
 
 import gui.LudoGUI;
 
-public class TestClient {
+public class TestClient extends LudoGUI{
 	
 	private static String host = "127.0.0.1";
 	private static final int PORT = 1337;
 	static BufferedReader clientIn;
-    static PrintWriter clientOut;
+    public static PrintWriter clientOut;
     private static ArrayList<String> messages = new ArrayList<String>();
     private static String playerNumber;
     private static String playerColor;
@@ -28,34 +28,42 @@ public class TestClient {
 	public static String player;
 	public static int selected;
 	public static int selectedIndex;
+	public static String ip;
+	public static Socket socket;
+	public static boolean send = false;
 
 	public static void conn() throws IOException {
-		Socket socket = new Socket(host, PORT);
+		socket = new Socket(host, PORT);
 		
 		clientIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 	    clientOut = new PrintWriter(socket.getOutputStream(), true);
 	    
-	    while(true) {
-		   	if(clientIn.readLine().startsWith(("GAME HAS STARTED"))) {
-			   	player = clientIn.readLine();
-			   	LudoGUI.getInfo().setText(player);
-		   		LudoGUI.getRollDice().setEnabled(true);
-		   		currPlayer = clientIn.readLine();
-		   	}
-	    }
+    	System.out.println(clientIn.readLine());
+    	System.out.println(clientIn.readLine());
+    	ip = clientIn.readLine();
+    	System.out.println(ip);
+    	if(clientIn.readLine().startsWith(("GAME HAS STARTED"))) {
+    		player = clientIn.readLine();
+    		LudoGUI.getInfo().setText(player);
+    		currPlayer = clientIn.readLine();
+    		System.out.println(currPlayer);
+    		LudoGUI.getRollDice().setEnabled(true);
+    	}
 	}
 	
-	public static void sendPos() throws IOException {
-   		if(MyIP().equals(currPlayer)) {
-   			clientOut.print(LudoGUI.getRoll());
-   			clientOut.print(selectedIndex);
-   			clientOut.print(selected);
-   		}
+	public static void sendPos() {
+		clientOut.println("hi");
+		String roll = LudoGUI.getRoll();
+		clientOut.println(roll);
+		clientOut.println(selectedIndex);
+		clientOut.println(selected);
 	}
-	
+
+
+
 	public static void enabled(String player) {
 		if(player.startsWith("player1")) {
-	   		for(int i = 0; i < 4; i++) {
+	   		for(int i = 0; i < 1; i++) {
 		   		LudoGUI.getPieces().get(i).setEnabled(true);
 	   		}
 		}
@@ -105,7 +113,7 @@ public class TestClient {
 	}
 
 	public static void main(String[] args) throws IOException{
-		LudoGUI simplegui = new LudoGUI();
+		TestClient simplegui = new TestClient();
         
         simplegui.setTitle("Ludo"); 
         simplegui.setSize(1350,990);    
@@ -116,9 +124,9 @@ public class TestClient {
 		TestClient.conn();
 	}
 	
-	public static int diceRoll() {
+	public static String diceRoll() {
 		Random diceVal = new Random();
-		return diceVal.nextInt(6)+1;
+		return ""+diceVal.nextInt(6)+1;
 		
 	}
 }

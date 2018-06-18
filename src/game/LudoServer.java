@@ -10,7 +10,6 @@ public class LudoServer{
     static ArrayList<LudoServerPlayer> serverPlayers = new ArrayList<LudoServerPlayer>();
     static ArrayList<PrintWriter> playerPrintWriters = new ArrayList<PrintWriter>();
 	
-	
 	public static void main(String[] args) throws IOException {
 		connection = new ServerSocket(PORT);
 		System.out.println("STARTING SERVER SOCKET...");
